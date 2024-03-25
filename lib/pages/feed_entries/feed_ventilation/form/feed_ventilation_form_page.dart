@@ -22,6 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:super_green_app/data/rel/rel_db.dart';
 import 'package:super_green_app/device_daemon/device_reachable_listener_bloc.dart';
+import 'package:super_green_app/l10n/common.dart';
 import 'package:super_green_app/main/main_navigator_bloc.dart';
 import 'package:super_green_app/pages/feed_entries/feed_ventilation/form/feed_ventilation_form_bloc.dart';
 import 'package:super_green_app/pages/feed_entries/feed_ventilation/form/feed_ventilation_humidity_form_page.dart';
@@ -292,13 +293,13 @@ class _FeedVentilationFormPageState extends State<FeedVentilationFormPage> {
                 onPressed: () {
                   Navigator.pop(context, false);
                 },
-                child: Text('NO'),
+                child: Text(CommonL10N.no),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.pop(context, true);
                 },
-                child: Text('YES'),
+                child: Text(CommonL10N.yes),
               ),
             ],
           );
@@ -334,13 +335,13 @@ class _FeedVentilationFormPageState extends State<FeedVentilationFormPage> {
                   onPressed: () {
                     Navigator.pop(context, false);
                   },
-                  child: Text('NO'),
+                  child: Text(CommonL10N.no),
                 ),
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context, true);
                   },
-                  child: Text('YES'),
+                  child: Text(CommonL10N.yes),
                 ),
               ],
             );

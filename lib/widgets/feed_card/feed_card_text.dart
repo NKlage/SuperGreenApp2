@@ -18,6 +18,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:super_green_app/l10n/common.dart';
 import 'package:super_green_app/widgets/green_button.dart';
 
 class FeedCardText extends StatefulWidget {
@@ -44,8 +45,12 @@ class _FeedCardTextState extends State<FeedCardText> {
       text = MarkdownBody(
         data: widget.text,
         styleSheet: MarkdownStyleSheet(
-            strong: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
-            p: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.normal)),
+            strong: TextStyle(
+                color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+            p: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                fontWeight: FontWeight.normal)),
       );
     } else {
       if (_textEditingController == null) {
@@ -64,7 +69,7 @@ class _FeedCardTextState extends State<FeedCardText> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: GreenButton(
-                title: 'OK',
+                title: CommonL10N.ok,
                 onPressed: () {
                   setState(() {
                     widget.onEdited!(_textEditingController!.value.text);
@@ -77,7 +82,8 @@ class _FeedCardTextState extends State<FeedCardText> {
       );
     }
     return Padding(
-      padding: const EdgeInsets.only(top: 4.0, left: 8.0, right: 8.0, bottom: 8.0),
+      padding:
+          const EdgeInsets.only(top: 4.0, left: 8.0, right: 8.0, bottom: 8.0),
       child: text,
     );
   }

@@ -153,13 +153,13 @@ class _SettingsPlantAlertsPageState extends State<SettingsPlantAlertsPage> {
                                 onPressed: () {
                                   Navigator.pop(context, false);
                                 },
-                                child: Text('NO'),
+                                child: Text(CommonL10N.no),
                               ),
                               TextButton(
                                 onPressed: () {
                                   Navigator.pop(context, true);
                                 },
-                                child: Text('YES'),
+                                child: Text(CommonL10N.yes),
                               ),
                             ],
                           );

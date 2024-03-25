@@ -18,6 +18,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:super_green_app/l10n/common.dart';
 import 'package:super_green_app/widgets/green_button.dart';
 import 'package:super_green_app/widgets/red_button.dart';
 
@@ -30,7 +31,12 @@ class PlantInfosForm extends StatelessWidget {
   final Function()? onSubmit;
 
   const PlantInfosForm(
-      {Key? key, this.icon, required this.title, required this.child, required this.onCancel, required this.onSubmit})
+      {Key? key,
+      this.icon,
+      required this.title,
+      required this.child,
+      required this.onCancel,
+      required this.onSubmit})
       : super(key: key);
 
   @override
@@ -42,12 +48,18 @@ class PlantInfosForm extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: icon != null ? SvgPicture.asset("assets/plant_infos/$icon", height: 25,) : Container(),
+              child: icon != null
+                  ? SvgPicture.asset(
+                      "assets/plant_infos/$icon",
+                      height: 25,
+                    )
+                  : Container(),
             ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(title, style: TextStyle(color: Colors.white, fontSize: 15)),
+                child: Text(title,
+                    style: TextStyle(color: Colors.white, fontSize: 15)),
               ),
             ),
           ],
@@ -63,7 +75,7 @@ class PlantInfosForm extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 4.0),
               child: GreenButton(
-                title: 'OK',
+                title: CommonL10N.ok,
                 onPressed: onSubmit,
               ),
             ),

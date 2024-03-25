@@ -22,6 +22,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:super_green_app/device_daemon/device_daemon_bloc.dart';
 import 'package:super_green_app/l10n.dart';
+import 'package:super_green_app/l10n/common.dart';
 import 'package:super_green_app/pages/settings/devices/auth_modal/auth_modal_bloc.dart';
 import 'package:super_green_app/widgets/fullscreen.dart';
 import 'package:super_green_app/widgets/fullscreen_loading.dart';
@@ -61,7 +62,8 @@ class _AuthModalPageState extends State<AuthModalPage> {
     return BlocListener<AuthModalBloc, AuthModalBlocState>(
       listener: (BuildContext context, AuthModalBlocState state) {
         if (state is AuthModalBlocStateDone) {
-          BlocProvider.of<DeviceDaemonBloc>(context).add(DeviceDaemonBlocEventLoggedIn(state.device));
+          BlocProvider.of<DeviceDaemonBloc>(context)
+              .add(DeviceDaemonBlocEventLoggedIn(state.device));
         }
       },
       child: BlocBuilder<AuthModalBloc, AuthModalBlocState>(
@@ -72,7 +74,7 @@ class _AuthModalPageState extends State<AuthModalPage> {
             return Container(
               height: 345,
               child: Fullscreen(
-                title: 'Done',
+                title: CommonL10N.done,
                 child: Icon(
                   Icons.check,
                   color: Colors.green,
@@ -107,7 +109,8 @@ class _AuthModalPageState extends State<AuthModalPage> {
                   child: Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 8.0),
                         child: SvgPicture.asset(
                           'assets/settings/icon_password.svg',
                           width: 40,
@@ -145,7 +148,8 @@ class _AuthModalPageState extends State<AuthModalPage> {
                       }),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 16),
+                  padding:
+                      const EdgeInsets.only(left: 16.0, right: 16.0, top: 16),
                   child: Text('Password',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -170,8 +174,10 @@ class _AuthModalPageState extends State<AuthModalPage> {
                       child: GreenButton(
                         onPressed: isValid()
                             ? () {
-                                BlocProvider.of<AuthModalBloc>(context).add(AuthModalBlocEventAuth(
-                                    username: _usernameController.text, password: _passwordController.text));
+                                BlocProvider.of<AuthModalBloc>(context).add(
+                                    AuthModalBlocEventAuth(
+                                        username: _usernameController.text,
+                                        password: _passwordController.text));
                               }
                             : null,
                         title: 'LOGIN',
@@ -186,6 +192,7 @@ class _AuthModalPageState extends State<AuthModalPage> {
   }
 
   bool isValid() {
-    return _usernameController.text.length >= 4 && _passwordController.text.length >= 4;
+    return _usernameController.text.length >= 4 &&
+        _passwordController.text.length >= 4;
   }
 }

@@ -19,9 +19,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:super_green_app/l10n.dart';
-import 'package:super_green_app/pages/feed_entries/common/comments/card/comments_card_page.dart';
 import 'package:super_green_app/data/assets/feed_entry.dart';
+import 'package:super_green_app/l10n.dart';
+import 'package:super_green_app/l10n/common.dart';
+import 'package:super_green_app/pages/feed_entries/common/comments/card/comments_card_page.dart';
 import 'package:super_green_app/pages/feed_entries/common/social_bar/social_bar_page.dart';
 import 'package:super_green_app/pages/feed_entries/entry_params/feed_water.dart';
 import 'package:super_green_app/pages/feed_entries/feed_water/card/feed_water_state.dart';
@@ -86,9 +87,12 @@ class FeedWaterCardPage extends StatefulWidget {
   final Animation<double> animation;
   final FeedState feedState;
   final FeedEntryState state;
-  final List<Widget> Function(BuildContext context, FeedEntryState feedEntryState)? cardActions;
+  final List<Widget> Function(
+      BuildContext context, FeedEntryState feedEntryState)? cardActions;
 
-  const FeedWaterCardPage(this.animation, this.feedState, this.state, {Key? key, this.cardActions}) : super(key: key);
+  const FeedWaterCardPage(this.animation, this.feedState, this.state,
+      {Key? key, this.cardActions})
+      : super(key: key);
 
   @override
   _FeedWaterCardPageState createState() => _FeedWaterCardPageState();
@@ -111,8 +115,10 @@ class _FeedWaterCardPageState extends State<FeedWaterCardPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          FeedCardTitle(FeedEntryIcons[FE_WATER]!, FeedWaterCardPage.feedWateringCardPageTitle, state.synced,
-              showSyncStatus: !state.isRemoteState, showControls: !state.isRemoteState),
+          FeedCardTitle(FeedEntryIcons[FE_WATER]!,
+              FeedWaterCardPage.feedWateringCardPageTitle, state.synced,
+              showSyncStatus: !state.isRemoteState,
+              showControls: !state.isRemoteState),
           Container(
             height: 200,
             alignment: Alignment.center,
@@ -130,20 +136,36 @@ class _FeedWaterCardPageState extends State<FeedWaterCardPage> {
   Widget _renderLoaded(BuildContext context, FeedWaterState state) {
     FeedWaterParams params = state.params as FeedWaterParams;
     List<Widget> cards = [
-      renderCard('assets/feed_form/icon_volume.svg', 8, FeedWaterCardPage.feedWateringCardPageVolume,
-          Text('${params.volume} L', style: TextStyle(fontWeight: FontWeight.w300, fontSize: 25))),
+      renderCard(
+          'assets/feed_form/icon_volume.svg',
+          8,
+          FeedWaterCardPage.feedWateringCardPageVolume,
+          Text('${params.volume} L',
+              style: TextStyle(fontWeight: FontWeight.w300, fontSize: 25))),
     ];
     if (params.ph != null) {
-      cards.add(renderCard('assets/products/toolbox/icon_ph_ec.svg', 0, 'PH',
-          Text('${params.ph}', style: TextStyle(fontWeight: FontWeight.w300, fontSize: 25))));
+      cards.add(renderCard(
+          'assets/products/toolbox/icon_ph_ec.svg',
+          0,
+          'PH',
+          Text('${params.ph}',
+              style: TextStyle(fontWeight: FontWeight.w300, fontSize: 25))));
     }
     if (params.ec != null) {
-      cards.add(renderCard('assets/products/toolbox/icon_ph_ec.svg', 0, 'EC',
-          Text('${params.ec} μS/cm', style: TextStyle(fontWeight: FontWeight.w300, fontSize: 25))));
+      cards.add(renderCard(
+          'assets/products/toolbox/icon_ph_ec.svg',
+          0,
+          'EC',
+          Text('${params.ec} μS/cm',
+              style: TextStyle(fontWeight: FontWeight.w300, fontSize: 25))));
     }
     if (params.tds != null) {
-      cards.add(renderCard('assets/products/toolbox/icon_ph_ec.svg', 0, 'TDS',
-          Text('${params.tds} ppm', style: TextStyle(fontWeight: FontWeight.w300, fontSize: 25))));
+      cards.add(renderCard(
+          'assets/products/toolbox/icon_ph_ec.svg',
+          0,
+          'TDS',
+          Text('${params.tds} ppm',
+              style: TextStyle(fontWeight: FontWeight.w300, fontSize: 25))));
     }
 
     return FeedCard(
@@ -151,14 +173,20 @@ class _FeedWaterCardPageState extends State<FeedWaterCardPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          FeedCardTitle(FeedEntryIcons[FE_WATER]!, FeedWaterCardPage.feedWateringCardPageTitle, state.synced,
-              showSyncStatus: !state.isRemoteState, showControls: !state.isRemoteState, onEdit: () {
+          FeedCardTitle(FeedEntryIcons[FE_WATER]!,
+              FeedWaterCardPage.feedWateringCardPageTitle, state.synced,
+              showSyncStatus: !state.isRemoteState,
+              showControls: !state.isRemoteState, onEdit: () {
             setState(() {
               editText = true;
             });
           }, onDelete: () {
-            BlocProvider.of<FeedBloc>(context).add(FeedBlocEventDeleteEntry(state));
-          }, actions: widget.cardActions != null ? widget.cardActions!(context, state) : []),
+            BlocProvider.of<FeedBloc>(context)
+                .add(FeedBlocEventDeleteEntry(state));
+          },
+              actions: widget.cardActions != null
+                  ? widget.cardActions!(context, state)
+                  : []),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Row(
@@ -166,13 +194,19 @@ class _FeedWaterCardPageState extends State<FeedWaterCardPage> {
               children: [
                 params.tooDry != null
                     ? Text(
-                        FeedWaterCardPage.feedWateringCardPageWasDry(params.tooDry == true ? 'YES' : 'NO'),
+                        FeedWaterCardPage.feedWateringCardPageWasDry(
+                            params.tooDry == true
+                                ? CommonL10N.yes
+                                : CommonL10N.no),
                         style: TextStyle(color: Color(0xffababab)),
                       )
                     : Container(),
                 params.nutrient != null
                     ? Text(
-                        FeedWaterCardPage.feedWateringCardPageWithNutes(params.nutrient == true ? 'YES' : 'NO'),
+                        FeedWaterCardPage.feedWateringCardPageWithNutes(
+                            params.nutrient == true
+                                ? CommonL10N.yes
+                                : CommonL10N.no),
                         style: TextStyle(color: Color(0xffababab)),
                       )
                     : Container(),
@@ -197,7 +231,9 @@ class _FeedWaterCardPageState extends State<FeedWaterCardPage> {
           (params.message ?? '') != '' || editText == true
               ? Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text(FeedWaterCardPage.feedWateringCardPageObservations, style: TextStyle()),
+                  child: Text(
+                      FeedWaterCardPage.feedWateringCardPageObservations,
+                      style: TextStyle()),
                 )
               : Container(),
           (params.message ?? '') != '' || editText == true
@@ -205,7 +241,8 @@ class _FeedWaterCardPageState extends State<FeedWaterCardPage> {
                   params.message ?? '',
                   edit: editText,
                   onEdited: (value) {
-                    BlocProvider.of<FeedBloc>(context).add(FeedBlocEventEditParams(state, params.copyWith(value)));
+                    BlocProvider.of<FeedBloc>(context).add(
+                        FeedBlocEventEditParams(state, params.copyWith(value)));
                     setState(() {
                       editText = false;
                     });
@@ -225,7 +262,8 @@ class _FeedWaterCardPageState extends State<FeedWaterCardPage> {
     );
   }
 
-  Widget renderCard(String icon, double iconPadding, String title, Widget child) {
+  Widget renderCard(
+      String icon, double iconPadding, String title, Widget child) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Container(

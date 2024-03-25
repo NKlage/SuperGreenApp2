@@ -24,6 +24,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:super_green_app/data/api/backend/backend_api.dart';
 import 'package:super_green_app/data/api/backend/products/models.dart';
+import 'package:super_green_app/l10n/common.dart';
 import 'package:super_green_app/main/main_navigator_bloc.dart';
 import 'package:super_green_app/pages/products/product/product_category/product_categories.dart';
 import 'package:super_green_app/pages/products/search_new_product/select_new_product_bloc.dart';
@@ -469,7 +470,7 @@ class _SelectNewProductPageState extends State<SelectNewProductPage> {
                 onPressed: () {
                   Navigator.pop(context, 0);
                 },
-                child: Text('CANCEL'),
+                child: Text(CommonL10N.cancel),
               ),
               TextButton(
                 onPressed: () {

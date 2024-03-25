@@ -20,6 +20,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:super_green_app/l10n/common.dart';
 
 class AppBarAction extends StatelessWidget {
   final String? icon;
@@ -102,7 +103,10 @@ class AppBarAction extends StatelessWidget {
     );
 
     if (this.disabled) {
-      body = Opacity(opacity: 0.5, child: body,);
+      body = Opacity(
+        opacity: 0.5,
+        child: body,
+      );
     }
 
     if (onCheck != null && onSkip != null) {
@@ -115,7 +119,7 @@ class AppBarAction extends StatelessWidget {
           backgroundColor: Color(0xFF7BC043),
           foregroundColor: Colors.white,
           icon: Icons.done,
-          label: 'Done',
+          label: CommonL10N.done,
         ),
         SlidableAction(
           onPressed: (context) {
@@ -124,7 +128,7 @@ class AppBarAction extends StatelessWidget {
           backgroundColor: Color(0xFF0392CF),
           foregroundColor: Colors.white,
           icon: Icons.skip_next,
-          label: 'Skip',
+          label: 'Skip', //TODO(nk): add to arb file
         ),
       ];
       return Slidable(
@@ -159,7 +163,10 @@ class AppBarAction extends StatelessWidget {
                   color: Colors.white,
                 ),
                 child: this.iconWidget ??
-                    SvgPicture.asset(this.icon!, width: iconSize, height: iconSize, fit: BoxFit.contain)),
+                    SvgPicture.asset(this.icon!,
+                        width: iconSize,
+                        height: iconSize,
+                        fit: BoxFit.contain)),
           ),
         ],
       ),
@@ -167,7 +174,9 @@ class AppBarAction extends StatelessWidget {
   }
 
   Widget renderBody(BuildContext context) {
-    Widget top = AutoSizeText(title, maxLines: 1, style: TextStyle(color: color, fontWeight: FontWeight.bold));
+    Widget top = AutoSizeText(title,
+        maxLines: 1,
+        style: TextStyle(color: color, fontWeight: FontWeight.bold));
     if (titleIcon != null) {
       top = Row(children: [top, titleIcon!]);
     }
@@ -180,7 +189,8 @@ class AppBarAction extends StatelessWidget {
           top,
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: center ? CrossAxisAlignment.center : CrossAxisAlignment.stretch,
+            crossAxisAlignment:
+                center ? CrossAxisAlignment.center : CrossAxisAlignment.stretch,
             children: [
               content ?? Container(),
             ],
@@ -202,17 +212,25 @@ class AppBarAction extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 color: Colors.white,
               ),
-              child: addIcon ? Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  actionIcon!,
-                  Positioned(
-                    right: -5,
-                    bottom: -10,
-                    child: Text('+', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 93, 96, 147)),),
-                  ),
-                ],
-              ) : actionIcon!),
+              child: addIcon
+                  ? Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        actionIcon!,
+                        Positioned(
+                          right: -5,
+                          bottom: -10,
+                          child: Text(
+                            '+',
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 93, 96, 147)),
+                          ),
+                        ),
+                      ],
+                    )
+                  : actionIcon!),
         ),
       ],
     );

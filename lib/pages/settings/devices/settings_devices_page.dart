@@ -20,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:super_green_app/data/rel/rel_db.dart';
+import 'package:super_green_app/l10n/common.dart';
 import 'package:super_green_app/main/main_navigator_bloc.dart';
 import 'package:super_green_app/pages/settings/devices/settings_devices_bloc.dart';
 import 'package:super_green_app/widgets/appbar.dart';
@@ -162,7 +163,7 @@ class SettingsDevicesPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
-                      'OR',
+                      CommonL10N.or,
                       style:
                           TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
                     ),
@@ -212,13 +213,13 @@ class SettingsDevicesPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.pop(context, false);
                 },
-                child: Text('NO'),
+                child: Text(CommonL10N.no),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.pop(context, true);
                 },
-                child: Text('YES'),
+                child: Text(CommonL10N.yes),
               ),
             ],
           );

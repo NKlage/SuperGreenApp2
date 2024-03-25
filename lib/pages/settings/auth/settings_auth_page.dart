@@ -24,6 +24,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:media_picker_builder/data/media_file.dart';
 import 'package:super_green_app/data/api/backend/backend_api.dart';
+import 'package:super_green_app/l10n/common.dart';
 import 'package:super_green_app/main/main_navigator_bloc.dart';
 import 'package:super_green_app/misc/permissions.dart';
 import 'package:super_green_app/notifications/notifications.dart';
@@ -55,7 +56,8 @@ class _SettingsAuthPageState extends State<SettingsAuthPage> {
           });
         } else if (state is SettingsAuthBlocStateDone) {
           Timer(Duration(seconds: 2), () {
-            BlocProvider.of<MainNavigatorBloc>(context).add(MainNavigatorActionPop());
+            BlocProvider.of<MainNavigatorBloc>(context)
+                .add(MainNavigatorActionPop());
           });
         }
       },
@@ -104,91 +106,110 @@ class _SettingsAuthPageState extends State<SettingsAuthPage> {
                 iconColor: Colors.white,
                 hideBackButton: !(state is SettingsAuthBlocStateLoaded),
               ),
-              body: AnimatedSwitcher(duration: Duration(milliseconds: 200), child: body));
+              body: AnimatedSwitcher(
+                  duration: Duration(milliseconds: 200), child: body));
         },
       ),
     );
   }
 
-  Widget _renderAuthBody(BuildContext context, SettingsAuthBlocStateLoaded state) {
+  Widget _renderAuthBody(
+      BuildContext context, SettingsAuthBlocStateLoaded state) {
     String? pic = state.user?.pic;
     if (pic != null) {
       pic = BackendAPI().feedsAPI.absoluteFileURL(pic);
     }
-    return Column(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-      Expanded(child: Container()),
-      Padding(
-        padding: const EdgeInsets.only(bottom: 20.0),
-        child: InkWell(
-            onTap: () {
-              Permissions.checkCapturePermissions().then((granted) {
-                if (!granted) return;
-                _buildPicker(context);
-              });
-            },
-            child: Column(
-              children: [
-                UserAvatar(icon: pic, size: 150),
-                Text(
-                  "Tap to change",
-                  style: TextStyle(color: Colors.blue),
-                ),
-              ],
-            )),
-      ),
-      Text(
-        'Connected to your',
-        style: TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
-        textAlign: TextAlign.center,
-      ),
-      Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16.0),
-        child:
-            Text('SGL ACCOUNT', style: TextStyle(fontSize: 45, fontWeight: FontWeight.w200, color: Color(0xff3bb30b))),
-      ),
-      state.user != null
-          ? Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Connected as '),
-                Text(state.user!.nickname!, style: TextStyle(fontWeight: FontWeight.bold)),
-              ],
-            )
-          : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: SizedBox(width: 20, height: 20, child: CircularProgressIndicator()),
-              ),
-              Text('Loading user data..')
-            ]),
-      _renderOptionCheckbx(context, 'Sync over mobile data too', (bool? newValue) {
-        setState(() {
-          _syncOverGSM = newValue ?? false;
-          BlocProvider.of<SettingsAuthBloc>(context).add(SettingsAuthBlocEventSetSyncedOverGSM(_syncOverGSM));
-        });
-      }, _syncOverGSM == true),
-      !state.notificationEnabled
-          ? GreenButton(
-              title: 'ACTIVATE NOTIFICATION',
-              onPressed: () {
-                BlocProvider.of<NotificationsBloc>(context).add(NotificationsBlocEventRequestPermission());
-              },
-            )
-          : Container(),
-      Expanded(child: Container()),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: InkWell(
-            onTap: () {_requestDelete(context);},
-            child: Text(
-              'Request account deletion',
-              style: TextStyle(decoration: TextDecoration.underline, color: Color(0xffff0000)),
-            )),
-      ),
-    ]);
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Expanded(child: Container()),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20.0),
+            child: InkWell(
+                onTap: () {
+                  Permissions.checkCapturePermissions().then((granted) {
+                    if (!granted) return;
+                    _buildPicker(context);
+                  });
+                },
+                child: Column(
+                  children: [
+                    UserAvatar(icon: pic, size: 150),
+                    Text(
+                      "Tap to change",
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  ],
+                )),
+          ),
+          Text(
+            'Connected to your',
+            style: TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
+            textAlign: TextAlign.center,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: Text('SGL ACCOUNT',
+                style: TextStyle(
+                    fontSize: 45,
+                    fontWeight: FontWeight.w200,
+                    color: Color(0xff3bb30b))),
+          ),
+          state.user != null
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Connected as '),
+                    Text(state.user!.nickname!,
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                  ],
+                )
+              : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator()),
+                  ),
+                  Text('Loading user data..')
+                ]),
+          _renderOptionCheckbx(context, 'Sync over mobile data too',
+              (bool? newValue) {
+            setState(() {
+              _syncOverGSM = newValue ?? false;
+              BlocProvider.of<SettingsAuthBloc>(context)
+                  .add(SettingsAuthBlocEventSetSyncedOverGSM(_syncOverGSM));
+            });
+          }, _syncOverGSM == true),
+          !state.notificationEnabled
+              ? GreenButton(
+                  title: 'ACTIVATE NOTIFICATION',
+                  onPressed: () {
+                    BlocProvider.of<NotificationsBloc>(context)
+                        .add(NotificationsBlocEventRequestPermission());
+                  },
+                )
+              : Container(),
+          Expanded(child: Container()),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: InkWell(
+                onTap: () {
+                  _requestDelete(context);
+                },
+                child: Text(
+                  'Request account deletion',
+                  style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      color: Color(0xffff0000)),
+                )),
+          ),
+        ]);
   }
 
-  Widget _renderUnauthBody(BuildContext context, SettingsAuthBlocStateLoaded state) {
+  Widget _renderUnauthBody(
+      BuildContext context, SettingsAuthBlocStateLoaded state) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -203,33 +224,41 @@ class _SettingsAuthPageState extends State<SettingsAuthPage> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: Text('SGL ACCOUNT',
-                  style: TextStyle(fontSize: 45, fontWeight: FontWeight.w200, color: Color(0xff3bb30b))),
+                  style: TextStyle(
+                      fontSize: 45,
+                      fontWeight: FontWeight.w200,
+                      color: Color(0xff3bb30b))),
             ),
             GreenButton(
               title: 'LOGIN',
               onPressed: () {
-                BlocProvider.of<MainNavigatorBloc>(context).add(MainNavigateToSettingsLogin(futureFn: (future) async {
+                BlocProvider.of<MainNavigatorBloc>(context)
+                    .add(MainNavigateToSettingsLogin(futureFn: (future) async {
                   dynamic res = await future;
                   if (res == true) {
                     //BlocProvider.of<SettingsAuthBloc>(context).add(SettingsAuthBlocEventInit());
-                    BlocProvider.of<MainNavigatorBloc>(context).add(MainNavigatorActionPop(param: res));
+                    BlocProvider.of<MainNavigatorBloc>(context)
+                        .add(MainNavigatorActionPop(param: res));
                   }
                 }));
               },
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('OR', style: TextStyle(fontWeight: FontWeight.normal)),
+              child: Text(CommonL10N.or,
+                  style: TextStyle(fontWeight: FontWeight.normal)),
             ),
             GreenButton(
               title: 'CREATE ACCOUNT',
               onPressed: () {
-                BlocProvider.of<MainNavigatorBloc>(context)
-                    .add(MainNavigateToSettingsCreateAccount(futureFn: (future) async {
+                BlocProvider.of<MainNavigatorBloc>(context).add(
+                    MainNavigateToSettingsCreateAccount(
+                        futureFn: (future) async {
                   dynamic res = await future;
                   if (res == true) {
                     //BlocProvider.of<SettingsAuthBloc>(context).add(SettingsAuthBlocEventInit());
-                    BlocProvider.of<MainNavigatorBloc>(context).add(MainNavigatorActionPop(param: res));
+                    BlocProvider.of<MainNavigatorBloc>(context)
+                        .add(MainNavigatorActionPop(param: res));
                   }
                 }));
               },
@@ -240,7 +269,8 @@ class _SettingsAuthPageState extends State<SettingsAuthPage> {
     );
   }
 
-  Widget _renderOptionCheckbx(BuildContext context, String text, Function(bool?) onChanged, bool value) {
+  Widget _renderOptionCheckbx(BuildContext context, String text,
+      Function(bool?) onChanged, bool value) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -255,7 +285,8 @@ class _SettingsAuthPageState extends State<SettingsAuthPage> {
           child: MarkdownBody(
             fitContent: true,
             data: text,
-            styleSheet: MarkdownStyleSheet(p: TextStyle(color: Color(0xff454545), fontSize: 14)),
+            styleSheet: MarkdownStyleSheet(
+                p: TextStyle(color: Color(0xff454545), fontSize: 14)),
           ),
         ),
       ],
@@ -272,8 +303,9 @@ class _SettingsAuthPageState extends State<SettingsAuthPage> {
           multiple: false,
           onDone: (Set<MediaFile?> selectedFiles) {
             Timer(Duration(milliseconds: 500), () {
-              BlocProvider.of<SettingsAuthBloc>(context)
-                  .add(SettingsAuthBlocEventUpdatePic(File(selectedFiles.toList()[0]!.path)));
+              BlocProvider.of<SettingsAuthBloc>(context).add(
+                  SettingsAuthBlocEventUpdatePic(
+                      File(selectedFiles.toList()[0]!.path)));
             });
             Navigator.pop(c);
           },
@@ -294,7 +326,8 @@ class _SettingsAuthPageState extends State<SettingsAuthPage> {
             create: (context) => DeleteAccountBloc(),
             child: DeleteAccountPage(onDone: () {
               //BlocProvider.of<MainNavigatorBloc>(context).add(MainNavigatorActionPop());
-              BlocProvider.of<SettingsAuthBloc>(pageContext).add(SettingsAuthBlocEventInit());
+              BlocProvider.of<SettingsAuthBloc>(pageContext)
+                  .add(SettingsAuthBlocEventInit());
             }),
           );
         });

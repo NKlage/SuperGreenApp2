@@ -17,6 +17,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:super_green_app/l10n/common.dart';
 import 'package:super_green_app/widgets/appbar.dart';
 
 class FeedFormLayout extends StatelessWidget {
@@ -74,7 +75,7 @@ class FeedFormLayout extends StatelessWidget {
                           onPressed: () {
                             Navigator.pop(context, false);
                           },
-                          child: Text('NO'),
+                          child: Text(CommonL10N.no),
                         ),
                         TextButton(
                           onPressed: () {
@@ -83,7 +84,7 @@ class FeedFormLayout extends StatelessWidget {
                               onCancel!();
                             }
                           },
-                          child: Text('YES'),
+                          child: Text(CommonL10N.yes),
                         ),
                       ],
                     );

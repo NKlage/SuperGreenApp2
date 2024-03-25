@@ -23,6 +23,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:super_green_app/data/rel/rel_db.dart';
+import 'package:super_green_app/l10n/common.dart';
 import 'package:super_green_app/main/main_navigator_bloc.dart';
 import 'package:super_green_app/pages/add_device/select_device/select_device_page.dart';
 import 'package:super_green_app/pages/settings/boxes/edit_config/settings_box_bloc.dart';
@@ -115,13 +116,13 @@ class _SettingsBoxPageState extends State<SettingsBoxPage> {
                                 onPressed: () {
                                   Navigator.pop(context, false);
                                 },
-                                child: Text('NO'),
+                                child: Text(CommonL10N.no),
                               ),
                               TextButton(
                                 onPressed: () {
                                   Navigator.pop(context, true);
                                 },
-                                child: Text('YES'),
+                                child: Text(CommonL10N.yes),
                               ),
                             ],
                           );

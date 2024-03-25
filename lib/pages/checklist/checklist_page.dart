@@ -44,6 +44,8 @@ import 'package:super_green_app/widgets/fullscreen_loading.dart';
 import 'package:super_green_app/widgets/green_button.dart';
 import 'package:tuple/tuple.dart';
 
+import '../../l10n/common.dart';
+
 class AppearAnimated extends StatefulWidget {
   final bool visible;
   final Widget child;
@@ -869,13 +871,13 @@ class _ChecklistPageState extends State<ChecklistPage> {
                 onPressed: () {
                   Navigator.pop(context, false);
                 },
-                child: Text('NO'),
+                child: Text(CommonL10N.no),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.pop(context, true);
                 },
-                child: Text('YES'),
+                child: Text(CommonL10N.yes),
               ),
             ],
           );
